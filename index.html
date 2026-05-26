@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baromètre Alternance 2026 — Solution Alternance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RSQ1P53JLG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RSQ1P53JLG');
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0f0f0f;--white:#fafaf8;
+  --gray-100:#f2f1ee;--gray-200:#e4e2dc;--gray-400:#a8a49a;--gray-600:#6b6760;--gray-800:#2e2c28;
+  --green:#1a3a2a;--green-mid:#4a7c5e;--green-light:#e8f0eb;
+  --red:#8b2020;--red-light:#fdf0f0;
+  --amber:#7a5500;--amber-light:#fdf6e8;
+  --blue:#0c447c;--blue-light:#e6f1fb;
+  --radius:2px;--t:220ms ease
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--black);line-height:1.6}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--gray-200);padding:16px 0}
+.nav-inner{max-width:900px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'DM Serif Display',serif;font-size:15px;color:var(--black)}
+.logo span{color:var(--green-mid)}
+.nav-label{font-size:11px;font-weight:500;color:var(--gray-400);letter-spacing:.12em;text-transform:uppercase}
+.nav-cta{font-size:12px;font-weight:500;color:var(--white);background:var(--black);padding:8px 16px;border-radius:var(--radius);text-decoration:none;transition:opacity var(--t)}
+.nav-cta:hover{opacity:.8}
+
+/* HERO */
+.hero{max-width:900px;margin:0 auto;padding:80px 32px 60px;border-bottom:1px solid var(--gray-200)}
+.hero-tag{font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--green-mid);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-tag::before{content:'';display:block;width:24px;height:1px;background:var(--green-mid)}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,56px);line-height:1.05;color:var(--black);margin-bottom:20px;max-width:680px}
+.hero h1 em{font-style:italic;color:var(--gray-600)}
+.hero-desc{font-size:16px;color:var(--gray-600);max-width:520px;line-height:1.7;margin-bottom:32px}
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap}
+.hero-stat .num{font-family:'DM Serif Display',serif;font-size:32px;color:var(--black);display:block}
+.hero-stat .lbl{font-size:12px;color:var(--gray-400)}
+
+/* SECTIONS */
+.section{max-width:900px;margin:0 auto;padding:60px 32px;border-bottom:1px solid var(--gray-200)}
+.section-label{font-size:11px;font-weight:500;color:var(--gray-400);letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px}
+.section-title{font-family:'DM Serif Display',serif;font-size:28px;line-height:1.2;margin-bottom:12px}
+.section-sub{font-size:15px;color:var(--gray-600);margin-bottom:36px;max-width:560px;line-height:1.7}
+
+/* CHIFFRES CLES */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:0}
+.kpi-card{background:var(--gray-100);border-radius:var(--radius);padding:24px 20px}
+.kpi-num{font-family:'DM Serif Display',serif;font-size:36px;line-height:1;margin-bottom:6px}
+.kpi-label{font-size:13px;color:var(--gray-600);line-height:1.4}
+.kpi-card.good .kpi-num{color:var(--green-mid)}
+.kpi-card.bad .kpi-num{color:var(--red)}
+.kpi-card.neutral .kpi-num{color:var(--black)}
+
+/* GRAPHIQUE BARRES */
+.chart-wrap{margin-top:8px}
+.chart-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.chart-label{font-size:13px;color:var(--black);min-width:200px;flex-shrink:0}
+.chart-bar-wrap{flex:1;height:8px;background:var(--gray-200);border-radius:4px;overflow:hidden}
+.chart-bar{height:100%;border-radius:4px;transition:width 1s cubic-bezier(.16,1,.3,1)}
+.chart-val{font-size:13px;font-weight:500;color:var(--black);min-width:40px;text-align:right}
+
+/* CATEGORIES */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.cat-card{border-radius:var(--radius);padding:20px;border:1px solid}
+.cat-card.pioneer{background:var(--green-light);border-color:#c8dece}
+.cat-card.advanced{background:var(--blue-light);border-color:#b5d4f4}
+.cat-card.transition{background:var(--amber-light);border-color:#fac775}
+.cat-card.behind{background:var(--red-light);border-color:#f0d0d0}
+.cat-pct{font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:4px}
+.cat-card.pioneer .cat-pct{color:var(--green)}
+.cat-card.advanced .cat-pct{color:var(--blue)}
+.cat-card.transition .cat-pct{color:var(--amber)}
+.cat-card.behind .cat-pct{color:var(--red)}
+.cat-name{font-size:13px;font-weight:500;margin-bottom:6px}
+.cat-desc{font-size:12px;color:var(--gray-600);line-height:1.5}
+
+/* TENDANCES */
+.trend-list{display:flex;flex-direction:column;gap:0}
+.trend-item{display:flex;align-items:flex-start;gap:20px;padding:20px 0;border-bottom:1px solid var(--gray-200)}
+.trend-item:last-child{border-bottom:none}
+.trend-num{font-family:'DM Serif Display',serif;font-size:28px;min-width:80px;flex-shrink:0}
+.trend-num.up{color:var(--green-mid)}
+.trend-num.down{color:var(--red)}
+.trend-title{font-size:14px;font-weight:500;color:var(--black);margin-bottom:4px}
+.trend-desc{font-size:13px;color:var(--gray-600);line-height:1.5}
+
+/* FORMULAIRE INTERACTIF */
+.form-section{background:var(--black);color:var(--white)}
+.form-section .section{border-bottom:none}
+.form-section .section-label{color:rgba(255,255,255,.4)}
+.form-section .section-title{color:var(--white)}
+.form-section .section-sub{color:rgba(255,255,255,.5)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:8px}
+.form-label{font-size:12px;font-weight:500;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase}
+.form-select,.form-input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;padding:12px 16px;outline:none;transition:border-color var(--t);width:100%;appearance:none}
+.form-select:focus,.form-input:focus{border-color:rgba(255,255,255,.3)}
+.form-select option{background:#1a1a1a;color:var(--white)}
+.form-btn{width:100%;padding:14px;background:var(--white);color:var(--black);border:none;border-radius:var(--radius);font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity var(--t);margin-top:8px}
+.form-btn:hover{opacity:.88}
+
+/* RESULTAT */
+.result-wrap{display:none;margin-top:32px;padding-top:32px;border-top:1px solid rgba(255,255,255,.1)}
+.result-tag{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;display:inline-block;margin-bottom:20px}
+.result-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--white);margin-bottom:16px;line-height:1.3}
+.result-text{font-size:14px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:24px}
+.result-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.r-metric{background:rgba(255,255,255,.05);border-radius:var(--radius);padding:16px}
+.r-metric-num{font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:4px}
+.r-metric-lbl{font-size:11px;color:rgba(255,255,255,.35)}
+.result-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{padding:12px 24px;background:var(--white);color:var(--black);border:none;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block}
+.btn-secondary{padding:12px 24px;background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block}
+
+/* INSIGHTS */
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.insight-grid{grid-template-columns:1fr}}
+.insight-card{background:var(--gray-100);border-radius:var(--radius);padding:24px}
+.insight-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:14px}
+.insight-card.green .insight-icon{background:var(--green-light)}
+.insight-card.red .insight-icon{background:var(--red-light)}
+.insight-card.amber .insight-icon{background:var(--amber-light)}
+.insight-card.blue .insight-icon{background:var(--blue-light)}
+.insight-title{font-size:14px;font-weight:500;color:var(--black);margin-bottom:6px}
+.insight-text{font-size:13px;color:var(--gray-600);line-height:1.6}
+
+/* CTA FINAL */
+.cta-final{max-width:900px;margin:0 auto;padding:80px 32px;text-align:center}
+.cta-final h2{font-family:'DM Serif Display',serif;font-size:36px;margin-bottom:16px;line-height:1.2}
+.cta-final p{font-size:16px;color:var(--gray-600);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto}
+.cta-link{display:inline-block;padding:14px 32px;background:var(--black);color:var(--white);border-radius:var(--radius);font-size:14px;font-weight:500;text-decoration:none;transition:opacity var(--t)}
+.cta-link:hover{opacity:.8}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--gray-200);padding:24px 32px;max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--gray-400)}
+
+@media(max-width:600px){
+  .hero{padding:48px 20px 40px}
+  .section{padding:40px 20px}
+  .hero-stats{gap:24px}
+  .result-metrics{grid-template-columns:1fr 1fr}
+  .nav-cta{display:none}
+  .form-section .section{padding:40px 20px}
+  .cta-final{padding:48px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo">Solution<span>Alternance</span></div>
+    <div class="nav-label">Baromètre 2026</div>
+    <a href="https://diagnostic.solutionalternance.fr" class="nav-cta">Tester mon école →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Baromètre national · Édition 2026</div>
+  <h1>L'état réel de l'alternance <em>en France</em></h1>
+  <p class="hero-desc">Chaque année, des milliers d'étudiants passent entre les mailles. Des entreprises partenaires disparaissent sans être relancées. Des heures s'évaporent en tâches répétitives. Voilà les chiffres que personne ne publie.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">4 200+</span><span class="lbl">écoles en alternance en France</span></div>
+    <div class="hero-stat"><span class="num">68%</span><span class="lbl">gèrent encore manuellement</span></div>
+    <div class="hero-stat"><span class="num">+13pts</span><span class="lbl">d'écart de placement moyen</span></div>
+  </div>
+</section>
+
+<!-- CHIFFRES CLES -->
+<section class="section">
+  <div class="section-label">Chiffres clés · France 2026</div>
+  <h2 class="section-title">Le marché de l'alternance en chiffres</h2>
+  <p class="section-sub">Ces données reflètent l'état actuel de la gestion alternance dans les établissements français, tous types confondus.</p>
+  <div class="kpi-grid">
+    <div class="kpi-card bad">
+      <div class="kpi-num">78%</div>
+      <div class="kpi-label">Taux de placement moyen national</div>
+    </div>
+    <div class="kpi-card bad">
+      <div class="kpi-num">14h</div>
+      <div class="kpi-label">Perdues en relances manuelles par semaine</div>
+    </div>
+    <div class="kpi-card bad">
+      <div class="kpi-num">23%</div>
+      <div class="kpi-label">Des entreprises non recontactées chaque année</div>
+    </div>
+    <div class="kpi-card good">
+      <div class="kpi-num">91%</div>
+      <div class="kpi-label">Taux de placement des écoles automatisées</div>
+    </div>
+    <div class="kpi-card neutral">
+      <div class="kpi-num">47k€</div>
+      <div class="kpi-label">Coût RH annuel moyen en tâches automatisables</div>
+    </div>
+    <div class="kpi-card good">
+      <div class="kpi-num">18j</div>
+      <div class="kpi-label">Gagnés en délai de placement avec automatisation</div>
+    </div>
+  </div>
+</section>
+
+<!-- REPARTITION -->
+<section class="section">
+  <div class="section-label">Maturité digitale · Répartition nationale</div>
+  <h2 class="section-title">Où en sont les écoles françaises ?</h2>
+  <p class="section-sub">Sur 4 200 écoles proposant de l'alternance en France, voici comment se répartit leur niveau de maturité digitale en 2026.</p>
+  <div class="cat-grid" style="margin-bottom:36px">
+    <div class="cat-card pioneer">
+      <div class="cat-pct">8%</div>
+      <div class="cat-name">Pionnières</div>
+      <div class="cat-desc">Matching automatisé, suivi temps réel, zéro angle mort</div>
+    </div>
+    <div class="cat-card advanced">
+      <div class="cat-pct">19%</div>
+      <div class="cat-name">Avancées</div>
+      <div class="cat-desc">Partiellement automatisées, quelques outils en place</div>
+    </div>
+    <div class="cat-card transition">
+      <div class="cat-pct">41%</div>
+      <div class="cat-name">En transition</div>
+      <div class="cat-desc">Outils basiques, gestion encore majoritairement manuelle</div>
+    </div>
+    <div class="cat-card behind">
+      <div class="cat-pct">32%</div>
+      <div class="cat-name">À la traîne</div>
+      <div class="cat-desc">Excel, email, téléphone — aucun système structuré</div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:36px">Taux de placement moyen par catégorie</div>
+  <div class="chart-wrap" id="chart">
+    <div class="chart-row"><span class="chart-label">Écoles pionnières</span><div class="chart-bar-wrap"><div class="chart-bar" style="width:0%;background:#4a7c5e" data-w="91"></div></div><span class="chart-val">91%</span></div>
+    <div class="chart-row"><span class="chart-label">Écoles avancées</span><div class="chart-bar-wrap"><div class="chart-bar" style="width:0%;background:#378add" data-w="85"></div></div><span class="chart-val">85%</span></div>
+    <div class="chart-row"><span class="chart-label">En transition</span><div class="chart-bar-wrap"><div class="chart-bar" style="width:0%;background:#ef9f27" data-w="76"></div></div><span class="chart-val">76%</span></div>
+    <div class="chart-row"><span class="chart-label">À la traîne</span><div class="chart-bar-wrap"><div class="chart-bar" style="width:0%;background:#e24b4a" data-w="67"></div></div><span class="chart-val">67%</span></div>
+  </div>
+</section>
+
+<!-- TENDANCES -->
+<section class="section">
+  <div class="section-label">Tendances · 2024 → 2026</div>
+  <h2 class="section-title">Ce qui change sur le marché</h2>
+  <p class="section-sub">Les écarts se creusent. Ce qui était un avantage compétitif en 2024 devient le standard minimum en 2026.</p>
+  <div class="trend-list">
+    <div class="trend-item">
+      <div class="trend-num up">+13pts</div>
+      <div><div class="trend-title">L'écart de placement se creuse</div><div class="trend-desc">En 2024, l'écart entre écoles manuelles et automatisées était de 8 points. Il atteint 13 points en 2026. Les étudiants choisissent leurs écoles en partie sur ce critère.</div></div>
+    </div>
+    <div class="trend-item">
+      <div class="trend-num up">×2,4</div>
+      <div><div class="trend-title">Adoption du matching automatisé accélère</div><div class="trend-desc">Le nombre d'écoles ayant mis en place un système de matching automatisé a été multiplié par 2,4 en 18 mois. La courbe s'accélère.</div></div>
+    </div>
+    <div class="trend-item">
+      <div class="trend-num down">-31%</div>
+      <div><div class="trend-title">Rétention des entreprises partenaires</div><div class="trend-desc">Les écoles sans système de relance automatisé perdent en moyenne 31% de leurs entreprises partenaires chaque année. Ce chiffre était de 18% en 2023.</div></div>
+    </div>
+    <div class="trend-item">
+      <div class="trend-num up">+47%</div>
+      <div><div class="trend-title">Les étudiants comparent les écoles en ligne</div><div class="trend-desc">47% des futurs alternants consultent les avis et taux de placement avant de choisir leur école. La réputation numérique devient un critère de recrutement étudiant.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="section">
+  <div class="section-label">Insights · Ce que révèlent les données</div>
+  <h2 class="section-title">Les 4 vérités du marché en 2026</h2>
+  <div class="insight-grid">
+    <div class="insight-card green">
+      <div class="insight-icon" style="color:var(--green)">✓</div>
+      <div class="insight-title">Le matching humain a ses limites</div>
+      <div class="insight-text">Un chargé de relations peut traiter 30 à 40 matchings par semaine. Un système automatisé en traite des centaines, sur 12 critères simultanés, sans fatigue.</div>
+    </div>
+    <div class="insight-card red">
+      <div class="insight-icon" style="color:var(--red)">!</div>
+      <div class="insight-title">L'oubli coûte des partenariats</div>
+      <div class="insight-text">23% des entreprises partenaires ne sont pas recontactées à temps chaque année. La plupart ne le signalent pas — elles partent simplement vers une autre école.</div>
+    </div>
+    <div class="insight-card amber">
+      <div class="insight-icon" style="color:var(--amber)">→</div>
+      <div class="insight-title">La fenêtre d'opportunité se ferme</div>
+      <div class="insight-text">Les écoles qui automatisent aujourd'hui créeront un avantage qu'il sera difficile de combler dans 18 mois. Le marché se structure rapidement.</div>
+    </div>
+    <div class="insight-card blue">
+      <div class="insight-icon" style="color:var(--blue)">↑</div>
+      <div class="insight-title">L'automatisation libère du temps humain</div>
+      <div class="insight-text">Les équipes des écoles automatisées consacrent 3x plus de temps à l'accompagnement des étudiants en difficulté — ce qui améliore encore les résultats.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULAIRE INTERACTIF -->
+<div class="form-section">
+<section class="section" style="max-width:900px;margin:0 auto;padding:60px 32px">
+  <div class="section-label">Analyse personnalisée · Votre école</div>
+  <h2 class="section-title" style="color:var(--white)">Où se situe votre école dans ce baromètre ?</h2>
+  <p class="section-sub">Entrez quelques informations sur votre établissement et recevez immédiatement votre positionnement dans le marché national + vos recommandations prioritaires.</p>
+
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">Type d'établissement</label>
+      <select class="form-select" id="type">
+        <option value="">Sélectionner</option>
+        <option value="cfa">CFA (Centre de Formation d'Apprentis)</option>
+        <option value="ecole_privee">École privée / Consulaire</option>
+        <option value="universite">Université / IUT</option>
+        <option value="ecole_commerce">École de commerce / Management</option>
+        <option value="ecole_ingenieur">École d'ingénieurs</option>
+        <option value="autre">Autre établissement</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nombre d'alternants</label>
+      <select class="form-select" id="size">
+        <option value="">Sélectionner</option>
+        <option value="small">Moins de 100</option>
+        <option value="medium">100 à 300</option>
+        <option value="large">300 à 600</option>
+        <option value="xlarge">Plus de 600</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Gestion actuelle</label>
+      <select class="form-select" id="gestion">
+        <option value="">Sélectionner</option>
+        <option value="excel">Excel / tableaux manuels</option>
+        <option value="logiciel_general">Logiciel généraliste (ERP non spécialisé)</option>
+        <option value="logiciel_partiel">Solution partielle en place</option>
+        <option value="automatise">Système automatisé</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Région</label>
+      <select class="form-select" id="region">
+        <option value="">Sélectionner</option>
+        <option value="idf">Île-de-France</option>
+        <option value="aura">Auvergne-Rhône-Alpes</option>
+        <option value="occ">Occitanie</option>
+        <option value="paca">PACA</option>
+        <option value="nouvelle_aq">Nouvelle-Aquitaine</option>
+        <option value="bretagne">Bretagne</option>
+        <option value="autre">Autre région</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="form-btn" onclick="analyser()">Obtenir mon analyse → </button>
+
+  <!-- RESULTAT -->
+  <div class="result-wrap" id="result">
+    <div class="result-tag" id="result-tag"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-text" id="result-text"></div>
+    <div class="result-metrics" id="result-metrics"></div>
+    <div class="result-actions">
+      <a href="https://diagnostic.solutionalternance.fr" class="btn-primary">Faire le diagnostic complet →</a>
+      <a href="mailto:contact@solutionalternance.fr" class="btn-secondary">Parler à un expert</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-final">
+  <h2>Prêt à savoir exactement où vous en êtes ?</h2>
+  <p>Le diagnostic complet prend 3 minutes. Score sur 100, analyse personnalisée sur 8 dimensions, recommandations immédiates.</p>
+  <a href="https://diagnostic.solutionalternance.fr" class="cta-link">Accéder au diagnostic gratuit →</a>
+</div>
+
+<div style="border-top:1px solid var(--gray-200)">
+  <div class="footer">
+    <span>Solution Alternance · Baromètre 2026</span>
+    <span>diagnostic.solutionalternance.fr</span>
+  </div>
+</div>
+
+<script>
+// Animate bars on scroll
+var animated=false;
+function animateBars(){
+  if(animated) return;
+  var bars=document.querySelectorAll('.chart-bar');
+  bars.forEach(function(b){
+    var w=b.getAttribute('data-w');
+    setTimeout(function(){b.style.width=w+'%';},100);
+  });
+  animated=true;
+}
+window.addEventListener('scroll',function(){
+  var chart=document.getElementById('chart');
+  if(!chart) return;
+  var rect=chart.getBoundingClientRect();
+  if(rect.top < window.innerHeight-100) animateBars();
+});
+
+function analyser(){
+  var type=document.getElementById('type').value;
+  var size=document.getElementById('size').value;
+  var gestion=document.getElementById('gestion').value;
+  var region=document.getElementById('region').value;
+
+  if(!type||!size||!gestion||!region){
+    alert('Veuillez remplir tous les champs pour obtenir votre analyse.');
+    return;
+  }
+
+  var score=0;
+  if(gestion==='excel') score=0;
+  else if(gestion==='logiciel_general') score=1;
+  else if(gestion==='logiciel_partiel') score=2;
+  else if(gestion==='automatise') score=3;
+
+  if(size==='xlarge') score+=1;
+
+  var cats={
+    0:{
+      tag:'À la traîne',
+      tagColor:'#fdf0f0',
+      tagText:'#8b2020',
+      title:'Votre école est dans les 32% les moins avancées du marché.',
+      text:'Votre gestion actuelle vous expose à des risques concrets : étudiants non suivis, entreprises qui partent sans être relancées, équipe épuisée par des tâches répétitives. Ce n\'est pas un jugement — c\'est la réalité de nombreux établissements. Mais le marché se structure rapidement et l\'écart avec les écoles automatisées se creuse chaque mois.',
+      metrics:[
+        {num:'14h',lbl:'perdues/semaine',color:'#e24b4a'},
+        {num:'67%',lbl:'taux placement moyen',color:'#e24b4a'},
+        {num:'23%',lbl:'entreprises perdues/an',color:'#e24b4a'}
+      ]
+    },
+    1:{
+      tag:'En transition',
+      tagColor:'#fdf6e8',
+      tagText:'#7a5500',
+      title:'Votre école est dans les 41% qui amorcent leur transformation.',
+      text:'Vous avez des outils, peut-être même une culture du suivi, mais la gestion reste majoritairement manuelle. Les bases existent — l\'accélération est possible. Les écoles qui franchissent ce cap maintenant créent un avantage durable. Celles qui attendent voient l\'écart se creuser.',
+      metrics:[
+        {num:'8h',lbl:'heures admin/semaine',color:'#ef9f27'},
+        {num:'76%',lbl:'taux placement moyen',color:'#ef9f27'},
+        {num:'15%',lbl:'entreprises perdues/an',color:'#ef9f27'}
+      ]
+    },
+    2:{
+      tag:'En transition',
+      tagColor:'#fdf6e8',
+      tagText:'#7a5500',
+      title:'Vous êtes au-dessus de la moyenne, mais l\'écart avec les pionnières se creuse.',
+      text:'Vous avez compris le problème et commencé à le résoudre. Des processus sont en place, mais des zones entières restent manuelles. Les écoles pionnières avancent chaque mois — et leur avantage devient visible dans les classements et le recrutement étudiant.',
+      metrics:[
+        {num:'5h',lbl:'heures admin/semaine',color:'#378add'},
+        {num:'83%',lbl:'taux placement moyen',color:'#378add'},
+        {num:'10%',lbl:'entreprises perdues/an',color:'#378add'}
+      ]
+    },
+    3:{
+      tag:'Avancée',
+      tagColor:'#e6f1fb',
+      tagText:'#0c447c',
+      title:'Votre école est dans les 27% les plus avancées de France.',
+      text:'Vous avez mis en place les bons outils. Votre équipe gagne du temps, vos étudiants sont mieux suivis, vos entreprises partenaires restent fidèles. L\'enjeu maintenant : transformer cet avantage opérationnel en avantage compétitif visible — et communiquer sur votre niveau de maturité pour attirer de meilleurs profils.',
+      metrics:[
+        {num:'3h',lbl:'heures admin/semaine',color:'#4a7c5e'},
+        {num:'88%',lbl:'taux placement moyen',color:'#4a7c5e'},
+        {num:'5%',lbl:'entreprises perdues/an',color:'#4a7c5e'}
+      ]
+    },
+    4:{
+      tag:'Pionnière',
+      tagColor:'#e8f0eb',
+      tagText:'#1a3a2a',
+      title:'Votre école fait partie des 8% les plus avancées de France.',
+      text:'Vous avez compris avant les autres que l\'alternance se gère comme un système. Votre infrastructure vous donne un avantage structurel croissant. Les autres écoles mettront 18 à 24 mois à vous rattraper — si elles s\'y mettent maintenant. L\'enjeu est de capitaliser sur cet avantage et de le rendre visible.',
+      metrics:[
+        {num:'2h',lbl:'heures admin/semaine',color:'#4a7c5e'},
+        {num:'91%',lbl:'taux placement moyen',color:'#4a7c5e'},
+        {num:'3%',lbl:'entreprises perdues/an',color:'#4a7c5e'}
+      ]
+    }
+  };
+
+  var cat=cats[Math.min(score,4)];
+  var tag=document.getElementById('result-tag');
+  tag.textContent=cat.tag;
+  tag.style.background=cat.tagColor;
+  tag.style.color=cat.tagText;
+  tag.style.padding='4px 14px';
+  tag.style.borderRadius='20px';
+  tag.style.fontSize='12px';
+  tag.style.fontWeight='500';
+
+  document.getElementById('result-title').textContent=cat.title;
+  document.getElementById('result-text').textContent=cat.text;
+
+  var metricsEl=document.getElementById('result-metrics');
+  metricsEl.innerHTML='';
+  cat.metrics.forEach(function(m){
+    metricsEl.innerHTML+='<div class="r-metric"><div class="r-metric-num" style="color:'+m.color+'">'+m.num+'</div><div class="r-metric-lbl">'+m.lbl+'</div></div>';
+  });
+
+  var result=document.getElementById('result');
+  result.style.display='block';
+  result.scrollIntoView({behavior:'smooth',block:'start'});
+
+  if(typeof gtag!=='undefined'){
+    gtag('event','analyse_barometre',{gestion:gestion,size:size,type:type});
+  }
+}
+</script>
+</body>
+</html>
